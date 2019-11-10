@@ -1,6 +1,8 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+const bodyParser = require('body-parser');
 
 require('dotenv/config');
 
@@ -11,32 +13,26 @@ mongoose.connect(process.env.DB_CONNECTION, { useUnifiedTopology: true }, () => 
   console.log('connected to MongoDB');
 });
 
-const products = [
-  {
-    id: 1,
-    name: 'phone',
-    price: 123,
-  },
-];
+const Product = mongoose.model('Product', {
+  id: Number,
+  name: String,
+  price: mongoose.Schema.Types.Decimal128,
+});
 
-app.get('/products', (req, res) => res.json(products));
-app.post('/products', (req, res) => {
-  products.push(req.body);
-  res.json(req.body);
-});
-app.put('/products/:id', (req, res) => {
-  const product = products.find((p) => p.id === +req.params.id);
-  const productIndex = products.indexOf(product);
-  const newProduct = { ...product, ...req.body };
-  products[productIndex] = newProduct;
-  res.json(newProduct);
-});
-app.delete('/products/:id', (req, res) => {
-  const product = products.find((p) => p.id === +req.params.id);
-  const productIndex = products.indexOf(product);
-  products.splice(productIndex, 1);
-  res.json(products);
-});
+app.get('/products', (req, res) => Product.find()
+  .exec()
+  .then((products) => res.json(products)));
+
+app.post('/products', (req, res) => Product.create(req.body)
+  .then((createdProduct) => res.json(createdProduct)));
+
+app.put('/products/:id', (req, res) => Product.findOneAndUpdate({ id: req.params.id }, req.body)
+  .exec()
+  .then((product) => res.json(product)));
+
+app.delete('/products/:id', (req, res) => Product.deleteOne({ id: req.params.id })
+  .exec()
+  .then(() => res.json({ success: true })));
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console
