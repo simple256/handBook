@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/simple256/handBook#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.7.9",
+    "mongodb": "^3.3.3",
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {
     "body-parser": "^1.19.0",
