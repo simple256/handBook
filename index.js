@@ -1,40 +1,27 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
-// eslint-disable-next-line import/no-extraneous-dependencies
-const bodyParser = require('body-parser');
-
+require('./app/models/products');
+const config = require('./config/index');
 require('dotenv/config');
 
 const app = express();
-app.use(bodyParser.json());
-mongoose.connect(process.env.DB_CONNECTION, { useUnifiedTopology: true }, () => {
+config.express(app);
+config.routes(app);
+
+const { appPort } = config.app;
+
+mongoose.connect(
+  process.env.DB_CONNECTION,
+  { useUnifiedTopology: true },
+  () => {
   // eslint-disable-next-line no-console
-  console.log('connected to MongoDB');
-});
-
-const Product = mongoose.model('Product', {
-  id: Number,
-  name: String,
-  price: mongoose.Schema.Types.Decimal128,
-});
-
-app.get('/products', (req, res) => Product.find()
-  .exec()
-  .then((products) => res.json(products)));
-
-app.post('/products', (req, res) => Product.create(req.body)
-  .then((createdProduct) => res.json(createdProduct)));
-
-app.put('/products/:id', (req, res) => Product.findOneAndUpdate({ id: req.params.id }, req.body)
-  .exec()
-  .then((product) => res.json(product)));
-
-app.delete('/products/:id', (req, res) => Product.deleteOne({ id: req.params.id })
-  .exec()
-  .then(() => res.json({ success: true })));
-
-app.listen(3000, () => {
+    console.log('connected to MongoDB');
+  },
+).then(() => app.listen(
+  appPort,
+  () => {
   // eslint-disable-next-line no-console
-  console.log('Lister on 3000');
-});
+    console.log('Lister on 3000');
+  },
+  // eslint-disable-next-line no-console
+)).catch(() => console.log('Connection failed'));
