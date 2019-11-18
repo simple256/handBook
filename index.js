@@ -21,7 +21,7 @@ mongoose.connect(
   appPort,
   () => {
   // eslint-disable-next-line no-console
-    console.log('Lister on 3000');
+    console.log(`Listening on ${appPort}...`);
   },
   // eslint-disable-next-line no-console
 )).catch(() => console.log('Connection failed'));

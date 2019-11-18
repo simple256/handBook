@@ -6,7 +6,7 @@ const { jwtSecret } = require('../../config/app');
 const User = mongoose.model('User');
 
 const signIn = (req, res) => {
-  const { email, pass } = req.body;
+  const { email, password } = req.body;
   User.findOne({ email })
     .exec()
     .then((user) => {
@@ -16,7 +16,7 @@ const signIn = (req, res) => {
         });
       }
 
-      const isValid = bCrypt.compareSync(pass, user.password);
+      const isValid = bCrypt.compareSync(password, user.password);
       if (isValid) {
         const token = jwt.sign(user._id.toString(), jwtSecret);
         res.json({ token });
@@ -34,4 +34,3 @@ const signIn = (req, res) => {
 module.exports = {
   signIn,
 };
-
