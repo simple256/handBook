@@ -1,4 +1,4 @@
 module.exports = {
-  appPort: 3000,
+  appPort: 5000,
   jwtSecret: 'Strong secret phrase from HANDBOOK project.',
 };
