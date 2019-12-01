@@ -18,6 +18,7 @@ const signIn = (req, res) => {
 
       const isValid = bCrypt.compareSync(password, user.password);
       if (isValid) {
+        // eslint-disable-next-line no-underscore-dangle
         const token = jwt.sign(user._id.toString(), jwtSecret);
         res.json({ token });
       } else {
@@ -31,6 +32,43 @@ const signIn = (req, res) => {
     }));
 };
 
+const register = (req, res) => {
+  const { email, password, confirmationPassword } = req.body;
+  if (!email || email.length < 5 || email.length > 40) {
+    res.json({
+      message: 'Введите корректный логин. Длина логина должна быть не менее 5 и не более 40 символов.',
+      fields: ['email'],
+    });
+  } else if (!password || password.length < 10 || password.length > 40) {
+    res.json({
+      message: 'Введите корректный пароль. Длина пароля не менее 10 и не более 40 символов.',
+      fields: ['password'],
+    });
+  } else if (password !== confirmationPassword) {
+    res.json({
+      message: 'Пароли не совпадают',
+      fields: ['password', 'confirmationPassword'],
+    });
+  } else {
+    User.findOne({ email })
+      .exec()
+      .then((user) => {
+        if (user) {
+          res.json({
+            message: 'Пользователь уже зарегистрирован.',
+          });
+        } else {
+          User.create({
+            email,
+            password: bCrypt.hashSync(password, 12),
+          }).then(() => res.status(200).json({ message: 'Success!' }))
+            .catch((err) => res.status(500).json(err));
+        }
+      });
+  }
+};
+
 module.exports = {
   signIn,
+  register,
 };

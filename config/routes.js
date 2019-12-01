@@ -11,4 +11,14 @@ module.exports = (app) => {
 
   // auth
   app.post('/signin', auth.signIn);
+  // {
+  //   "email": "aaaaa2222a@mail",
+  //   "password": "123123123123123123"
+  // }
+  app.put('/register', auth.register);
+  // {
+  //   "email": "aaaaa2222a@mail",
+  //   "password": "123123123123123123",
+  //   "confirmationPassword": "123123123123123123"
+  // }
 };
