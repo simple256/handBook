@@ -19,7 +19,9 @@ const signIn = (req, res) => {
       const isValid = bCrypt.compareSync(password, user.password);
       if (isValid) {
         // eslint-disable-next-line no-underscore-dangle
-        const token = jwt.sign(user._id.toString(), jwtSecret);
+        const token = jwt.sign({ uid: user._id.toString() }, jwtSecret, {
+          expiresIn: '24h', // expires in 24 hours
+        });
         res.json({ token });
       } else {
         res.status(401).json({
