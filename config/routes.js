@@ -1,5 +1,6 @@
 const products = require('../app/controllers/products');
 const auth = require('../app/controllers/auth');
+const categories = require('../app/controllers/categories');
 const authMiddleware = require('../app/middleware/auth');
 
 module.exports = (app) => {
@@ -21,4 +22,7 @@ module.exports = (app) => {
   //   "password": "123123123123123123",
   //   "confirmationPassword": "123123123123123123"
   // }
+
+  app.get('/categories', categories.getInitialMenu);
+  app.get('/categories/:id', categories.getSubMenu);
 };
