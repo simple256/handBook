@@ -22,6 +22,7 @@ module.exports = (app) => {
   //   "password": "123123123123123123",
   //   "confirmationPassword": "123123123123123123"
   // }
+  app.post('/refresh-token', auth.updateSession);
 
   app.get('/categories', categories.getInitialMenu);
   app.get('/categories/:id', categories.getSubMenu);

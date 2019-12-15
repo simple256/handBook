@@ -6,6 +6,7 @@ const action = require('./action');
 const object = require('./object');
 const role = require('./role');
 const category = require('./category');
+const session = require('./session');
 
 module.exports = {
   product,
@@ -16,4 +17,5 @@ module.exports = {
   object,
   role,
   category,
+  session,
 };

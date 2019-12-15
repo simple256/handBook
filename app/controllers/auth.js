@@ -4,6 +4,27 @@ const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../../config/app');
 
 const User = mongoose.model('User');
+const Session = mongoose.model('Session');
+
+const generateNewToken = (uid) => {
+  const createdAt = new Date();
+  const expiresAt = new Date(createdAt);
+  expiresAt.setDate(expiresAt.getDate() + 14);
+  // eslint-disable-next-line no-underscore-dangle
+  const token = jwt.sign({ uid }, jwtSecret, {
+    expiresIn: '1h', // expires in 1 hour
+  });
+  // eslint-disable-next-line no-underscore-dangle
+  const refreshToken = jwt.sign({ uid }, jwtSecret, {
+    expiresIn: '336h', // expires in 2 weeks
+  });
+  return {
+    createdAt,
+    expiresAt,
+    token,
+    refreshToken,
+  };
+};
 
 const signIn = (req, res) => {
   const { email, password } = req.body;
@@ -19,10 +40,25 @@ const signIn = (req, res) => {
       const isValid = bCrypt.compareSync(password, user.password);
       if (isValid) {
         // eslint-disable-next-line no-underscore-dangle
-        const token = jwt.sign({ uid: user._id.toString() }, jwtSecret, {
-          expiresIn: '24h', // expires in 24 hours
+        const {
+          createdAt,
+          expiresAt,
+          token,
+          refreshToken,
+          // eslint-disable-next-line no-underscore-dangle
+        } = generateNewToken(user._id.toString());
+        res.json({ token, refreshToken });
+        Session.create({
+          // eslint-disable-next-line no-underscore-dangle
+          userId: user._id,
+          token: token.toString(),
+          refreshToken: refreshToken.toString(),
+          // ip: String,
+          // fingerprint: String,
+          expiresAt,
+          createdAt,
+          // updatedAt: mongoose.Schema.Date,
         });
-        res.json({ token });
       } else {
         res.status(401).json({
           message: 'Invalid credentials.',
@@ -70,7 +106,39 @@ const register = (req, res) => {
   }
 };
 
+const updateSession = (req, res) => {
+  const { refreshToken } = req.body;
+  Session.findOneAndDelete({ refreshToken })
+    .exec()
+    .then((session) => {
+      if (session.expiresAt > new Date()) {
+        res.status(401).json({
+          message: 'Token expired',
+        });
+      }
+      const {
+        tokenNew,
+        refreshTokenNew,
+        expiresAtNew,
+        createdAtNew,
+      } = generateNewToken(session.userId.toString());
+      Session.create({
+        // eslint-disable-next-line no-underscore-dangle
+        userId: session.userId,
+        token: tokenNew.toString(),
+        refreshToken: refreshTokenNew.toString(),
+        // ip: String,
+        // fingerprint: String,
+        expiresAt: expiresAtNew,
+        createdAt: createdAtNew,
+        // updatedAt: mongoose.Schema.Date,
+      });
+      res.json({ token: tokenNew, refreshToken: refreshTokenNew });
+    });
+};
+
 module.exports = {
   signIn,
   register,
+  updateSession,
 };

@@ -1,5 +1,8 @@
+const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../../config/app');
+
+const Session = mongoose.model('Session');
 
 module.exports = (req, res, next) => {
   const authHeader = req.get('Authorization');
@@ -9,8 +12,22 @@ module.exports = (req, res, next) => {
     });
   }
   const token = authHeader.replace('Bearer ', '');
+  let userId;
   try {
     jwt.verify(token, jwtSecret);
+    Session.findOne({ token })
+      .exec()
+      .then((existSession) => {
+        if (existSession.expiresIn < new Date()) {
+          userId = existSession.userId;
+        } else {
+          req.status(401).json({
+            message: 'Token expired',
+          });
+        }
+      }, () => req.status(401).json({
+        message: 'Session not found',
+      }));
   } catch (e) {
     if (e instanceof jwt.JsonWebTokenError) {
       req.status(401).json({
@@ -19,5 +36,5 @@ module.exports = (req, res, next) => {
     }
   }
 
-  next();
+  next(userId);
 };
