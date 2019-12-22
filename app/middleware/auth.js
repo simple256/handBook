@@ -18,8 +18,10 @@ module.exports = (req, res, next) => {
     Session.findOne({ token })
       .exec()
       .then((existSession) => {
-        if (existSession.expiresIn < new Date()) {
+        if (existSession.expiresAt > new Date()) {
           userId = existSession.userId;
+          req.userId = userId;
+          next();
         } else {
           req.status(401).json({
             message: 'Token expired',
@@ -35,6 +37,4 @@ module.exports = (req, res, next) => {
       });
     }
   }
-
-  next(userId);
 };
