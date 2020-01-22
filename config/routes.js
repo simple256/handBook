@@ -16,34 +16,34 @@ module.exports = (app) => {
   // app.delete('/products/:id', authMiddleware, products.remove);
 
   // action
-  app.get('/actions', authMiddleware, action.getAll);
-  app.post('/actions', authMiddleware, action.create);
-  app.put('/actions/:id', authMiddleware, action.update);
-  app.delete('/actions/:id', authMiddleware, action.remove);
+  app.get('/actions', action.getAll);
+  app.post('/actions', action.create);
+  app.put('/actions/:id', action.update);
+  app.delete('/actions/:id', action.remove);
 
   // object
-  app.get('/objects', authMiddleware, object.getAll);
-  app.post('/objects', authMiddleware, object.create);
-  app.put('/objects/:id', authMiddleware, object.update);
-  app.delete('/objects/:id', authMiddleware, object.remove);
+  app.get('/objects', object.getAll);
+  app.post('/objects', object.create);
+  app.put('/objects/:id', object.update);
+  app.delete('/objects/:id', object.remove);
 
   // project
-  app.get('/projects', authMiddleware, project.getAll);
-  app.post('/projects', authMiddleware, project.create);
-  app.put('/projects/:id', authMiddleware, project.update);
-  app.delete('/projects/:id', authMiddleware, project.remove);
+  app.get('/projects', project.getAll);
+  app.post('/projects', project.create);
+  app.put('/projects/:id', project.update);
+  app.delete('/projects/:id', project.remove);
 
   // role
-  app.get('/roles', authMiddleware, role.getAll);
-  app.post('/roles', authMiddleware, role.create);
-  app.put('/roles/:id', authMiddleware, role.update);
-  app.delete('/roles/:id', authMiddleware, role.remove);
+  app.get('/roles', role.getAll);
+  app.post('/roles', role.create);
+  app.put('/roles/:id', role.update);
+  app.delete('/roles/:id', role.remove);
 
   // stage
-  app.get('/stages', authMiddleware, stage.getAll);
-  app.post('/stages', authMiddleware, stage.create);
-  app.put('/stages/:id', authMiddleware, stage.update);
-  app.delete('/stages/:id', authMiddleware, stage.remove);
+  app.get('/stages', stage.getAll);
+  app.post('/stages', stage.create);
+  app.put('/stages/:id', stage.update);
+  app.delete('/stages/:id', stage.remove);
 
   // auth
   app.post('/signin', auth.signIn);
