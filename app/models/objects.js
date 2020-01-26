@@ -4,4 +4,4 @@ const ObjectsSchema = new mongoose.Schema({
   title: String,
 });
 
-mongoose.model('Objects', ObjectsSchema);
+mongoose.model('ObjectsModel', ObjectsSchema);

@@ -1,36 +1,36 @@
 const mongoose = require('mongoose');
 
-const Objects = mongoose.model('Objects');
+const Operations = mongoose.model('Operations');
 
 const getAll = (req, res) => {
-  Objects.find()
+  Operations.find()
     .exec()
     .then((actions) => res.json(actions))
     .catch((err) => res.status(500).json(err));
 };
 
 const get = (req, res) => {
-  Objects.findById(req.params.id)
+  Operations.findById(req.params.id)
     .exec()
     .then((action) => res.json(action))
     .catch((err) => res.status(500).json(err));
 };
 
 const create = (req, res) => {
-  Objects.create(req.body)
+  Operations.create(req.body)
     .then((action) => res.json(action))
     .catch((err) => res.status(500).json(err));
 };
 
 const update = (req, res) => {
-  Objects.findOneAndUpdate({ id: req.params.id }, req.body)
+  Operations.findOneAndUpdate({ id: req.params.id }, req.body)
     .exec()
     .then((action) => res.json(action))
     .catch((err) => res.status(500).json(err));
 };
 
 const remove = (req, res) => {
-  Objects.deleteOne({ id: req.params.id })
+  Operations.deleteOne({ id: req.params.id })
     .exec()
     .then(() => res.json({ success: true }))
     .catch((err) => res.status(500).json(err));

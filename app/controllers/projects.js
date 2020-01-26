@@ -1,29 +1,36 @@
 const mongoose = require('mongoose');
 
-const Project = mongoose.model('Projects');
+const Projects = mongoose.model('Projects');
 
 const getAll = (req, res) => {
-  Project.find()
+  Projects.find()
     .exec()
     .then((actions) => res.json(actions))
     .catch((err) => res.status(500).json(err));
 };
 
+const get = (req, res) => {
+  Projects.findById(req.params.id)
+    .exec()
+    .then((action) => res.json(action))
+    .catch((err) => res.status(500).json(err));
+};
+
 const create = (req, res) => {
-  Project.create(req.body)
+  Projects.create(req.body)
     .then((action) => res.json(action))
     .catch((err) => res.status(500).json(err));
 };
 
 const update = (req, res) => {
-  Project.findOneAndUpdate({ id: req.params.id }, req.body)
+  Projects.findOneAndUpdate({ id: req.params.id }, req.body)
     .exec()
     .then((action) => res.json(action))
     .catch((err) => res.status(500).json(err));
 };
 
 const remove = (req, res) => {
-  Project.deleteOne({ id: req.params.id })
+  Projects.deleteOne({ id: req.params.id })
     .exec()
     .then(() => res.json({ success: true }))
     .catch((err) => res.status(500).json(err));
@@ -31,6 +38,7 @@ const remove = (req, res) => {
 
 module.exports = {
   getAll,
+  get,
   create,
   update,
   remove,
