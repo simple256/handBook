@@ -1,29 +1,36 @@
 const mongoose = require('mongoose');
 
-const Role = mongoose.model('Role');
+const Actions = mongoose.model('Actions');
 
 const getAll = (req, res) => {
-  Role.find()
+  Actions.find()
     .exec()
     .then((actions) => res.json(actions))
     .catch((err) => res.status(500).json(err));
 };
 
+const get = (req, res) => {
+  Actions.findById(req.params.id)
+    .exec()
+    .then((action) => res.json(action))
+    .catch((err) => res.status(500).json(err));
+};
+
 const create = (req, res) => {
-  Role.create(req.body)
+  Actions.create(req.body)
     .then((action) => res.json(action))
     .catch((err) => res.status(500).json(err));
 };
 
 const update = (req, res) => {
-  Role.findOneAndUpdate({ id: req.params.id }, req.body)
+  Actions.findOneAndUpdate({ id: req.params.id }, req.body)
     .exec()
     .then((action) => res.json(action))
     .catch((err) => res.status(500).json(err));
 };
 
 const remove = (req, res) => {
-  Role.deleteOne({ id: req.params.id })
+  Actions.deleteOne({ id: req.params.id })
     .exec()
     .then(() => res.json({ success: true }))
     .catch((err) => res.status(500).json(err));
@@ -31,6 +38,7 @@ const remove = (req, res) => {
 
 module.exports = {
   getAll,
+  get,
   create,
   update,
   remove,

@@ -9,6 +9,13 @@ const getAll = (req, res) => {
     .catch((err) => res.status(500).json(err));
 };
 
+const get = (req, res) => {
+  ObjectModel.findById(req.params.id)
+    .exec()
+    .then((action) => res.json(action))
+    .catch((err) => res.status(500).json(err));
+};
+
 const create = (req, res) => {
   ObjectModel.create(req.body)
     .then((action) => res.json(action))
@@ -31,6 +38,7 @@ const remove = (req, res) => {
 
 module.exports = {
   getAll,
+  get,
   create,
   update,
   remove,

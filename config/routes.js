@@ -1,69 +1,50 @@
-// const products = require('../app/controllers/products');
-const auth = require('../app/controllers/auth');
-const categories = require('../app/controllers/categories');
-const action = require('../app/controllers/action');
-const object = require('../app/controllers/object');
-const project = require('../app/controllers/project');
-const role = require('../app/controllers/role');
-const stage = require('../app/controllers/stage');
-const authMiddleware = require('../app/middleware/auth');
+const actions = require('../app/controllers/actions');
+const stages = require('../app/controllers/stages');
+const operations = require('../app/controllers/operations');
+const objects = require('../app/controllers/objects');
+const actors = require('../app/controllers/actors');
+const projects = require('../app/controllers/projects');
 
 module.exports = (app) => {
-  // // product
-  // app.get('/products', authMiddleware, products.getAll);
-  // app.post('/products', authMiddleware, products.create);
-  // app.put('/products/:id', authMiddleware, products.update);
-  // app.delete('/products/:id', authMiddleware, products.remove);
+  // actions
+  app.get('/actions', actions.getAll);
+  app.get('/action/:id', actions.get);
+  app.post('/actions', actions.create);
+  app.put('/action/:id', actions.update);
+  app.delete('/action/:id', actions.remove);
 
-  // action
-  app.get('/actions', action.getAll);
-  app.post('/actions', action.create);
-  app.put('/actions/:id', action.update);
-  app.delete('/actions/:id', action.remove);
+  // stages
+  app.get('/stages', stages.getAll);
+  app.get('/stage/:id', stages.get);
+  app.post('/stages', stages.create);
+  app.put('/stage/:id', stages.update);
+  app.delete('/stage/:id', stages.remove);
 
-  // object
-  app.get('/objects', object.getAll);
-  app.post('/objects', object.create);
-  app.put('/objects/:id', object.update);
-  app.delete('/objects/:id', object.remove);
+  // operations
+  app.get('/operations', operations.getAll);
+  app.get('/operation/:id', operations.get);
+  app.post('/operations', operations.create);
+  app.put('/operation/:id', operations.update);
+  app.delete('/operation/:id', operations.remove);
 
-  // project
-  app.get('/projects', project.getAll);
-  app.post('/projects', project.create);
-  app.put('/projects/:id', project.update);
-  app.delete('/projects/:id', project.remove);
+  // objects
+  app.get('/objects', objects.getAll);
+  app.get('/object/:id', objects.get);
+  app.post('/objects', objects.create);
+  app.put('/object/:id', objects.update);
+  app.delete('/object/:id', objects.remove);
 
-  // role
-  app.get('/roles', role.getAll);
-  app.post('/roles', role.create);
-  app.put('/roles/:id', role.update);
-  app.delete('/roles/:id', role.remove);
+  // actors
+  app.get('/actors', actors.getAll);
+  app.get('/actor/:id', actors.get);
+  app.post('/actors', actors.create);
+  app.put('/actor/:id', actors.update);
+  app.delete('/actor/:id', actors.remove);
 
-  // stage
-  app.get('/stages', stage.getAll);
-  app.post('/stages', stage.create);
-  app.put('/stages/:id', stage.update);
-  app.delete('/stages/:id', stage.remove);
-
-  // auth
-  app.post('/signin', auth.signIn);
-  // {
-  //   "email": "aaaaa2222a@mail",
-  //   "password": "123123123123123123"
-  // }
-  app.put('/register', auth.register);
-  // {
-  //   "email": "aaaaa2222a@mail",
-  //   "password": "123123123123123123",
-  //   "confirmationPassword": "123123123123123123"
-  // }
-  app.post('/refresh-token', auth.updateSession);
-
-  // category
-  app.get('/categoryMenu', categories.getInitialMenu);
-  app.get('/category/:id', categories.getSubMenu);
-  app.get('/category', categories.getAll);
-  app.post('/category', categories.create);
-  app.put('/category/:id', categories.update);
-  app.delete('/category/:id', categories.remove);
+  // projects
+  app.get('/projects', projects.getAll);
+  app.get('/project/:id', projects.get);
+  app.post('/projects', projects.create);
+  app.put('/project/:id', projects.update);
+  app.delete('/project/:id', projects.remove);
 };
