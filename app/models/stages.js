@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const StagesSchema = new mongoose.Schema({
-  stages: [mongoose.Schema.Types.ObjectId],
+  stages_id: [mongoose.Schema.Types.ObjectId],
 });
 
 mongoose.model('Stages', StagesSchema);
