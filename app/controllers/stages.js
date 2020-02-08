@@ -44,10 +44,30 @@ const get = (req, res) => {
     .catch((err) => res.status(500).json(err));
 };
 
-const create = (req, res) => {
-  Stages.create(req.body)
-    .then((action) => res.json(action))
-    .catch((err) => res.status(500).json(err));
+const create = async (req, res) => {
+  if (req.body.operations && req.body.operations.length) {
+    const operations = [];
+    const allOperations = req.body.operations.slice();
+    console.log('\n\n'+allOperations+'\n\n');
+    // for (const operation of allOperations) {
+      Operations.create({
+        title: allOperations[0].title,
+        description: allOperations[0].description,
+        actor_id: allOperations[0].actor,
+        object_id: allOperations[0].object,
+        action_id: allOperations[0].action,
+      }).then(async (result) => {
+        // eslint-disable-next-line no-underscore-dangle
+        operations.push(result._doc._id);
+      }).catch((err) => res.status(500).json(err));
+    // }
+    console.log('\n\n'+operations+'\n\n');
+    Stages.create({
+      stages_id: operations,
+    })
+      .then((action) => res.json(action))
+      .catch((err) => res.status(500).json(err));
+  }
 };
 
 const update = (req, res) => {
