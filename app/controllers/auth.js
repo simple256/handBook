@@ -29,9 +29,11 @@ const signIn = (req, res) => {
         });
       }
     })
-    .catch((err) => res.status(500).json({
-      message: err.message,
-    }));
+    .catch((err) =>
+      res.status(500).json({
+        message: err.message,
+      }),
+    );
 };
 
 const register = (req, res) => {
@@ -63,7 +65,8 @@ const register = (req, res) => {
           User.create({
             email,
             password: bCrypt.hashSync(password, 12),
-          }).then(() => res.status(200).json({ message: 'Success!' }))
+          })
+            .then(() => res.status(200).json({ message: 'Success!' }))
             .catch((err) => res.status(500).json(err));
         }
       });
