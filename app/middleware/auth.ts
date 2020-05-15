@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken');
-const { jwtSecret } = require('../../config/app');
+import * as jwt from 'jsonwebtoken';
+import jwtSecret from '../../config/app';
 
-module.exports = (req, res, next) => {
+export = (req, res, next) => {
   const authHeader = req.get('Authorization');
   if (!authHeader) {
     res.status(401).json({

@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
+import * as mongoose from 'mongoose';
 
+require('../models/products');
 const Product = mongoose.model('Product');
 
 const getAll = (req, res) => {
@@ -29,9 +30,4 @@ const remove = (req, res) => {
     .catch((err) => res.status(500).json(err));
 };
 
-module.exports = {
-  getAll,
-  create,
-  update,
-  remove,
-};
+export { getAll, create, update, remove };
