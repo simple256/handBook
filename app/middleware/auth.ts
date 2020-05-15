@@ -1,11 +1,11 @@
 import * as jwt from 'jsonwebtoken';
-import jwtSecret from '../../config/app';
+import { jwtSecret } from '../../config/app';
 
 export = (req, res, next) => {
   const authHeader = req.get('Authorization');
   if (!authHeader) {
     res.status(401).json({
-      message: 'Token not provided!',
+      message: 'Token not provided!111',
     });
   }
   const token = authHeader.replace('Bearer ', '');
