@@ -1,7 +1,7 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const { user, product } = require('./app/models/index');
+import * as express from 'express';
+import * as mongoose from 'mongoose';
 const config = require('./config/index');
+const { user, product } = require('./app/models/index');
 require('dotenv/config');
 
 const app = express();
@@ -12,17 +12,11 @@ const { appPort } = config.app;
 
 mongoose
   .connect(process.env.DB_CONNECTION, { useUnifiedTopology: true }, () => {
-    // eslint-disable-next-line no-console
     console.log('connected to MongoDB');
   })
   .then(() =>
-    app.listen(
-      appPort,
-      () => {
-        // eslint-disable-next-line no-console
-        console.log(`Listening on ${appPort}...`);
-      },
-      // eslint-disable-next-line no-console
-    ),
+    app.listen(appPort, () => {
+      console.log(`Listening on ${appPort}...`);
+    }),
   )
   .catch(() => console.log('Connection failed'));

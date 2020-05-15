@@ -1,4 +1,4 @@
-module.exports = {
-  appPort: 5000,
-  jwtSecret: 'Strong secret phrase from HANDBOOK project.',
-};
+const appPort = 5000;
+const jwtSecret = 'Strong secret phrase from HANDBOOK project.';
+
+export { appPort, jwtSecret };

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon index.js",
     "eslint": "eslint .",
-    "prettier": "prettier --check \"**/*.(ts|js)\"",
+    "prettier": "prettier --check \"./**/*.(ts|js)\"",
     "prettier:fix": "npm rum prettier -- --write"
   },
   "husky": {
@@ -40,6 +40,8 @@
     "uuid": "^8.0.0"
   },
   "devDependencies": {
+    "@types/express": "^4.17.6",
+    "@types/mongoose": "^5.7.19",
     "@types/node": "^14.0.1",
     "body-parser": "^1.19.0",
     "eslint": "^6.8.0",

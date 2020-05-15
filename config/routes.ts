@@ -1,21 +1,20 @@
-const products = require('../app/controllers/products');
-const auth = require('../app/controllers/auth');
+import { authController, productsController } from '../app/controllers';
 const authMiddleware = require('../app/middleware/auth');
 
-module.exports = (app) => {
+export = (app) => {
   // product
-  app.get('/products', authMiddleware, products.getAll);
-  app.post('/products', authMiddleware, products.create);
-  app.put('/products/:id', authMiddleware, products.update);
-  app.delete('/products/:id', authMiddleware, products.remove);
+  app.get('/products', authMiddleware, productsController.getAll);
+  app.post('/products', authMiddleware, productsController.create);
+  app.put('/products/:id', authMiddleware, productsController.update);
+  app.delete('/products/:id', authMiddleware, productsController.remove);
 
   // auth
-  app.post('/signin', auth.signIn);
+  app.post('/signin', authController.signIn);
   // {
   //   "email": "aaaaa2222a@mail",
   //   "password": "123123123123123123"
   // }
-  app.put('/register', auth.register);
+  app.put('/register', authController.register);
   // {
   //   "email": "aaaaa2222a@mail",
   //   "password": "123123123123123123",
