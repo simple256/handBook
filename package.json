@@ -5,7 +5,20 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "eslint": "eslint ."
+    "eslint": "eslint .",
+    "prettier": "prettier --check \"**/*.(ts|js)\"",
+    "prettier:fix": "npm rum prettier -- --write"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.(ts|js)": [
+      "npm run prettier:fix",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
@@ -16,6 +29,7 @@
   "bugs": {
     "url": "https://github.com/simple256/handBook/issues"
   },
+  "private": true,
   "homepage": "https://github.com/simple256/handBook#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
