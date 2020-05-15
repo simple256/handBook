@@ -5,7 +5,20 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "eslint": "eslint ."
+    "eslint": "eslint .",
+    "prettier": "prettier --check \"**/*.(ts|js)\"",
+    "prettier:fix": "npm rum prettier -- --write"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.(ts|js)": [
+      "npm run prettier:fix",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
@@ -16,20 +29,24 @@
   "bugs": {
     "url": "https://github.com/simple256/handBook/issues"
   },
+  "private": true,
   "homepage": "https://github.com/simple256/handBook#readme",
   "dependencies": {
-    "bcrypt": "^3.0.6",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.3.3",
-    "mongoose": "^5.7.9"
+    "mongoose": "^5.7.9",
+    "uuid": "^8.0.0"
   },
   "devDependencies": {
     "body-parser": "^1.19.0",
-    "eslint": "^6.6.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
-    "nodemon": "^1.19.4"
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-prettier": "^3.1.3",
+    "nodemon": "^1.19.4",
+    "prettier": "^2.0.5"
   }
 }
