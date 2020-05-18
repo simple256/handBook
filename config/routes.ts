@@ -3,10 +3,10 @@ const authMiddleware = require('../app/middleware/auth');
 
 export = (app) => {
   // product
-  app.get('/products', authMiddleware, productsController.getAll);
-  app.post('/products', authMiddleware, productsController.create);
-  app.put('/products/:id', authMiddleware, productsController.update);
-  app.delete('/products/:id', authMiddleware, productsController.remove);
+  app.get('/products', productsController.getAll);
+  app.post('/products', productsController.create);
+  app.put('/products/:id', productsController.update);
+  app.delete('/products/:id', productsController.remove);
 
   // auth
   app.post('/signin', authController.signIn);

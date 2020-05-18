@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon",
+    "start": "node",
+    "check": "nodemon",
     "eslint": "eslint .",
     "prettier": "prettier --check \"**/*.(ts|js)\"",
     "prettier:fix": "npm rum prettier -- --write"

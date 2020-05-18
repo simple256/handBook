@@ -11,7 +11,7 @@ config.routes(app);
 const { appPort } = config.app;
 
 mongoose
-  .connect(process.env.DB_CONNECTION, { useUnifiedTopology: true }, () => {
+  .connect(process.env.DB_CONNECTION, { useUnifiedTopology: true, useNewUrlParser: true }, () => {
     console.log('connected to MongoDB');
   })
   .then(() =>
