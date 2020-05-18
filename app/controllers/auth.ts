@@ -1,9 +1,9 @@
-import * as mongoose from 'mongoose';
+import { model } from 'mongoose';
 const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../../config/app');
 
 require('../models/user');
-const User = mongoose.model('User');
+const User = model('User');
 
 const signIn = (req, res) => {
   const { email, password } = req.body;
@@ -72,4 +72,4 @@ const register = (req, res) => {
   }
 };
 
-export { signIn, register };
+export default { signIn, register };

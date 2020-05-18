@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon",
     "eslint": "eslint .",
-    "prettier": "prettier --check \"**/*.(ts|js)\"",
+    "prettier": "prettier --check \"**/*.(ts)\"",
     "prettier:fix": "npm rum prettier -- --write"
   },
   "husky": {

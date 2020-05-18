@@ -1,7 +1,6 @@
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 const config = require('./config/index');
-const { user, product } = require('./app/models/index');
 require('dotenv/config');
 
 const app = express();
