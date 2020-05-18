@@ -1,13 +1,15 @@
-import { actionsController, authController, stagesController } from '../app/controllers';
+import {
+  actionsController,
+  actorsController,
+  authController,
+  objectsController,
+  operationsController,
+  projectsController,
+  stagesController,
+} from '../app/controllers';
 // const authMiddleware = require('../app/middleware/auth');
 
 export = (app) => {
-  // // product
-  // app.get('/products', productsController.getAll);
-  // app.post('/products', productsController.create);
-  // app.put('/products/:id', productsController.update);
-  // app.delete('/products/:id', productsController.remove);
-
   /**
    * Actions requests
    */
@@ -17,14 +19,16 @@ export = (app) => {
   app.delete('/action/:id', actionsController.remove);
 
   /**
-   * Stages requests
+   * Actors requests
    */
-  app.get('/stages', stagesController.getAll);
-  app.post('/stages', stagesController.create);
-  app.put('/stage/:id', stagesController.update);
-  app.delete('/stage/:id', stagesController.remove);
+  app.get('/actors', actorsController.getAll);
+  app.post('/actors', actorsController.create);
+  app.put('/actor/:id', actorsController.update);
+  app.delete('/actor/:id', actorsController.remove);
 
-  // auth
+  /**
+   * Auth requests
+   */
   app.post('/signin', authController.signIn);
   // {
   //   "email": "aaaaa2222a@mail",
@@ -36,4 +40,44 @@ export = (app) => {
   //   "password": "123123123123123123",
   //   "confirmationPassword": "123123123123123123"
   // }
+
+  /**
+   * Stages requests
+   */
+  app.get('/stages', stagesController.getAll);
+  app.post('/stages', stagesController.create);
+  app.put('/stage/:id', stagesController.update);
+  app.delete('/stage/:id', stagesController.remove);
+
+  /**
+   * Objects requests
+   */
+  app.get('/objects', objectsController.getAll);
+  app.post('/objects', objectsController.create);
+  app.put('/object/:id', objectsController.update);
+  app.delete('/object/:id', objectsController.remove);
+
+  /**
+   * Operations requests
+   */
+  app.get('/operations', operationsController.getAll);
+  app.post('/operations', operationsController.create);
+  app.put('/operation/:id', operationsController.update);
+  app.delete('/operation/:id', operationsController.remove);
+
+  /**
+   * Projects requests
+   */
+  app.get('/projects', projectsController.getAll);
+  app.post('/projects', projectsController.create);
+  app.put('/project/:id', projectsController.update);
+  app.delete('/project/:id', projectsController.remove);
+
+  /**
+   * Stages requests
+   */
+  app.get('/stages', stagesController.getAll);
+  app.post('/stages', stagesController.create);
+  app.put('/stage/:id', stagesController.update);
+  app.delete('/stage/:id', stagesController.remove);
 };
