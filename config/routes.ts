@@ -3,7 +3,6 @@ import {
   actorsController,
   authController,
   objectsController,
-  operationsController,
   projectsController,
   stagesController,
 } from '../app/controllers';
@@ -56,14 +55,6 @@ export = (app) => {
   app.post('/objects', objectsController.create);
   app.put('/object/:id', objectsController.update);
   app.delete('/object/:id', objectsController.remove);
-
-  /**
-   * Operations requests
-   */
-  app.get('/operations', operationsController.getAll);
-  app.post('/operations', operationsController.create);
-  app.put('/operation/:id', operationsController.update);
-  app.delete('/operation/:id', operationsController.remove);
 
   /**
    * Projects requests
