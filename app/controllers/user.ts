@@ -6,7 +6,7 @@ const UserModel = model('User');
 function update(request: Request, response: Response) {
   const { currentUser } = request;
   if (currentUser) {
-    UserModel.findByIdAndUpdate(currentUser.get('_id'), request.body)
+    UserModel.updateOne({ _id: currentUser.get('id') }, request.body)
       .exec()
       .then(
         () => response.status(200).send('OK'),

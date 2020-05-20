@@ -24,9 +24,9 @@ function create(request: Request, res: Response): void {
 }
 
 function update(request: Request, response: Response): void {
-  Actions.findOneAndUpdate(
+  Actions.updateOne(
     {
-      id: request.params.id,
+      _id: request.params.id,
     },
     request.body,
   )

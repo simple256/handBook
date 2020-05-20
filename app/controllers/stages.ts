@@ -18,7 +18,7 @@ const create = async (req: Request, res: Response) => {
 };
 
 const update = (req: Request, res: Response) => {
-  Stages.findOneAndUpdate({ _id: req.params.id }, req.body)
+  Stages.updateOne({ _id: req.params.id }, req.body)
     .exec()
     .then((action: any) => res.status(200).send('OK'))
     .catch((err: Error) => res.status(500).json(err));

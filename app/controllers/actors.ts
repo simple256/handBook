@@ -24,7 +24,7 @@ const create = (req: Request, res: Response) => {
 };
 
 const update = (req: Request, res: Response) => {
-  Actors.findOneAndUpdate({ id: req.params.id }, req.body)
+  Actors.updateOne({ _id: req.params.id }, req.body)
     .exec()
     .then((action: any) => res.json(action))
     .catch((err: Error) => res.status(500).json(err));
