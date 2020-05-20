@@ -13,6 +13,15 @@ const UserSchema = new Schema({
     type: [Schema.Types.ObjectId],
     required: false,
   },
+  name: {
+    type: String,
+    required: false,
+  },
+  role: {
+    type: String,
+    required: false,
+    default: ['user'],
+  },
 });
 
 model('User', UserSchema);

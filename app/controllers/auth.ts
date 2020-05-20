@@ -1,4 +1,4 @@
-import * as bCrypt from 'bcryptjs';
+import * as argon2 from 'argon2';
 import * as jwt from 'jsonwebtoken';
 import { model } from 'mongoose';
 
@@ -15,9 +15,17 @@ const signIn = (req, res) => {
           message: 'Пользователя не существует.',
         });
       }
-      const isValid = bCrypt.compareSync(password, user.get('password_hash'));
+      const isValid = argon2.verify(password, user.get('password_hash'));
       if (isValid) {
-        const token = jwt.sign({ uid: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: '12h' });
+        const token = jwt.sign(
+          {
+            _id: user.get('_id'),
+            name: user.get('name'),
+            role: user.get('role'),
+          },
+          process.env.JWT_SECRET,
+          { expiresIn: '12h' },
+        );
         res.json({ token });
       } else {
         res.status(401).json({
@@ -52,18 +60,19 @@ const register = (req, res) => {
   } else {
     User.findOne({ email })
       .exec()
-      .then((user) => {
+      .then(async (user) => {
         if (user) {
-          res.json({
+          res.status(500).json({
             message: 'Пользователь уже зарегистрирован.',
           });
         } else {
           User.create({
             email,
-            password_hash: bCrypt.hashSync(password, 12),
-          })
-            .then(() => res.status(200).json({ message: 'Success!' }))
-            .catch((err) => res.status(500).json(err));
+            password_hash: await argon2.hash(password),
+          }).then(
+            () => res.status(200).send('OK'),
+            (err) => res.status(500).json(err),
+          );
         }
       });
   }

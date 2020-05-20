@@ -5,7 +5,7 @@ const StagesSchema = new Schema({
     {
       _id: {
         type: Schema.Types.ObjectId,
-        required: true,
+        required: false,
       },
       title: {
         type: String,
