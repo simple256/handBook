@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
+require('dotenv/config');
 
-// TODO: Добавить функцию обновления токена, расширить проверку токена
-export = (req, res, next) => {
+export default function checkToken(req, res, next) {
   const authHeader = req.get('Authorization');
   if (!authHeader) {
     res.status(401).json({
@@ -20,4 +20,4 @@ export = (req, res, next) => {
   }
 
   next();
-};
+}

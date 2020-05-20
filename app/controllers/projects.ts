@@ -4,7 +4,8 @@ import { Request, Response } from '../interfaces/express';
 const Projects = model('Projects');
 
 const getAll = (req: Request, res: Response) => {
-  Projects.find()
+  const userProjects = req.currentUser.get('projects_id');
+  Projects.find({ _id: { $in: userProjects } })
     .exec()
     .then((actions: any) => res.json(actions))
     .catch((err: Error) => res.status(500).json(err));

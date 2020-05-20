@@ -1,4 +1,4 @@
-const routes = require('./routes');
+const router = require('./router');
 const express = require('./express');
 
-export { routes, express };
+export { router, express };
