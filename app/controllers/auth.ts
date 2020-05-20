@@ -1,7 +1,6 @@
 import * as bCrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { model } from 'mongoose';
-import { jwtSecret } from '../../config/app';
 
 require('../models/user');
 const User = model('User');
@@ -13,19 +12,16 @@ const signIn = (req, res) => {
     .then((user) => {
       if (!user) {
         res.status(401).json({
-          message: 'User does not exist.',
+          message: 'Пользователя не существует.',
         });
       }
-
       const isValid = bCrypt.compareSync(password, user.get('password_hash'));
       if (isValid) {
-        const token = jwt.sign({ uid: user._id.toString() }, jwtSecret, {
-          expiresIn: '24h', // expires in 24 hours
-        });
+        const token = jwt.sign({ uid: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: '12h' });
         res.json({ token });
       } else {
         res.status(401).json({
-          message: 'Invalid credentials.',
+          message: 'Неверные данные для авторизации.',
         });
       }
     })

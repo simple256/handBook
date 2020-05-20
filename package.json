@@ -15,7 +15,7 @@
     }
   },
   "lint-staged": {
-    "*.(ts|js)": [
+    "*.(ts)": [
       "npm run prettier:fix",
       "git add"
     ]
@@ -35,16 +35,19 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-jwt": "^5.3.3",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.3.3",
     "mongoose": "^5.7.9",
     "uuid": "^8.0.0"
   },
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/jsonwebtoken": "^8.5.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.6",
     "@types/mongoose": "^5.7.19",
     "@types/node": "^14.0.1",
+    "@types/express-jwt": "0.0.42",
     "body-parser": "^1.19.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",

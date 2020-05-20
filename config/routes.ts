@@ -41,14 +41,6 @@ export = (app) => {
   // }
 
   /**
-   * Stages requests
-   */
-  app.get('/stages', stagesController.getAll);
-  app.post('/stages', stagesController.create);
-  app.put('/stage/:id', stagesController.update);
-  app.delete('/stage/:id', stagesController.remove);
-
-  /**
    * Objects requests
    */
   app.get('/objects', objectsController.getAll);
@@ -67,7 +59,8 @@ export = (app) => {
   /**
    * Stages requests
    */
-  app.get('/stages', stagesController.getAll);
+  // app.get('/stages', stagesController.getAll);
+  app.get('/stage/:id', stagesController.get);
   app.post('/stages', stagesController.create);
   app.put('/stage/:id', stagesController.update);
   app.delete('/stage/:id', stagesController.remove);
