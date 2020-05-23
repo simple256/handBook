@@ -7,4 +7,4 @@ const ObjectsSchema = new Schema({
   },
 });
 
-model('ObjectsModel', ObjectsSchema);
+model('Objects', ObjectsSchema);

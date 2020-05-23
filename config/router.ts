@@ -3,6 +3,7 @@ import {
   actorsController,
   authController,
   objectsController,
+  projectCategoriesController,
   projectsController,
   stagesController,
   userController,
@@ -69,4 +70,10 @@ export = (app) => {
    * User request
    */
   app.put('/user/:id', checkToken, isAuth, attachCurrentUser, userController.update);
+
+  /**
+   * projectCategories request
+   */
+  app.get('/projectCategories', projectCategoriesController.getFirstLevel);
+  app.post('/projectCategories', projectCategoriesController.create);
 };
