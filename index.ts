@@ -23,9 +23,18 @@ mongoose
   .connect(process.env.DB_CONNECTION, { useUnifiedTopology: true, useNewUrlParser: true }, () => {
     console.log('connected to MongoDB');
   })
-  .then(() => {
-    httpsServer.listen(443, () => {
-      console.log(`Listening on 443...`);
-    });
-  })
-  .catch(() => console.log('Connection failed'));
+  .then(
+    () => {
+      if (Boolean(process.env.IS_DEBUG)) {
+        app.listen(process.env.APP_PORT, () => {
+          console.log(`Listening on ${process.env.APP_PORT}...`);
+        });
+      } else {
+        const defaultHTTPSPort = 443;
+        httpsServer.listen(defaultHTTPSPort, () => {
+          console.log(`Listening on ${defaultHTTPSPort}...`);
+        });
+      }
+    },
+    () => console.log('Connection failed'),
+  );
