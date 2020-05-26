@@ -13,7 +13,7 @@ export default function checkToken(req, res, next) {
     jwt.verify(token, process.env.JWT_SECRET);
   } catch (e) {
     if (e instanceof jwt.JsonWebTokenError) {
-      req.status(401).json({
+      res.status(401).json({
         message: 'Неверный токен.',
       });
     }
