@@ -1,0 +1,9 @@
+{
+  "name": "Node.js API – TypeScript Documentation",
+  "inputFiles": ["./app"],
+  "out": "./documentation/typedoc",
+  "readme": "./README.md",
+  "json": "./documentation/typedoc.json",
+  "mode": "file",
+  "exclude": ["**/*+(.spec|.e2e).ts", "node_modules"]
+}

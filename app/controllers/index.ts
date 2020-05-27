@@ -21,12 +21,12 @@ import { default as stagesController } from './stages';
 import { default as userController } from './user';
 
 export {
-  projectCategoriesController,
-  actionsController,
-  actorsController,
-  objectsController,
-  projectsController,
-  stagesController,
-  authController,
-  userController,
+    projectCategoriesController,
+    actionsController,
+    actorsController,
+    objectsController,
+    projectsController,
+    stagesController,
+    authController,
+    userController,
 };

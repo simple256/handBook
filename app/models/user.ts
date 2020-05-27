@@ -1,27 +1,27 @@
 import { model, Schema } from 'mongoose';
 
 const UserSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-  },
-  password_hash: {
-    type: String,
-    required: true,
-  },
-  projects_id: {
-    type: [Schema.Types.ObjectId],
-    required: false,
-  },
-  name: {
-    type: String,
-    required: false,
-  },
-  role: {
-    type: String,
-    required: false,
-    default: 'user',
-  },
+    email: {
+        type: String,
+        required: true,
+    },
+    password_hash: {
+        type: String,
+        required: true,
+    },
+    projects_id: {
+        type: [Schema.Types.ObjectId],
+        required: false,
+    },
+    name: {
+        type: String,
+        required: false,
+    },
+    role: {
+        type: String,
+        required: false,
+        default: 'user',
+    },
 });
 
 model('User', UserSchema);
