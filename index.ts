@@ -20,7 +20,7 @@ const credentials = { key: privateKey, cert: certificate };
 const httpsServer = https.createServer(credentials, app);
 
 mongoose
-  .connect(process.env.DB_CONNECTION, { useNewUrlParser: true }, () => {
+  .connect(process.env.DB_CONNECTION, { useUnifiedTopology: true, useNewUrlParser: true }, () => {
     console.log('connected to MongoDB');
   })
   .then(
