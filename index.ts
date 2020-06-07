@@ -25,7 +25,7 @@ mongoose
   })
   .then(
     () => {
-      if (Boolean(process.env.IS_DEBUG)) {
+      if (Boolean(process?.env?.IS_DEBUG) === true) {
         app.listen(process.env.APP_PORT, () => {
           console.log(`Listening on ${process.env.APP_PORT}...`);
         });

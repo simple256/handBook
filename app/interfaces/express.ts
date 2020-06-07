@@ -5,7 +5,7 @@ type Request = typeof express.request;
 type Response = typeof express.response;
 
 interface IRequest extends Request {
-    currentUser: Document;
+  currentUser: Document;
 }
 
 export { IRequest as Request, Response };
