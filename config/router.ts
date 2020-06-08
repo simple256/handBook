@@ -15,6 +15,7 @@ export = (app) => {
    * Actions requests
    */
   app.get('/api/actions', checkToken, isAuth, attachCurrentUser, actionsController.getAll);
+  app.get('/api/action/:id', checkToken, isAuth, attachCurrentUser, actionsController.get);
   app.post('/api/actions', checkToken, isAuth, attachCurrentUser, actionsController.create);
   app.put('/api/action/:id', checkToken, isAuth, attachCurrentUser, actionsController.update);
   app.delete('/api/action/:id', checkToken, isAuth, attachCurrentUser, actionsController.remove);
@@ -52,7 +53,7 @@ export = (app) => {
   /**
    * Projects requests
    */
-  app.get('/api/projects', checkToken, isAuth, attachCurrentUser, projectsController.getAll);
+  app.get('/api/projects', checkToken, isAuth, attachCurrentUser, projectsController.getAllUsersProject);
   app.post('/api/projects', checkToken, isAuth, attachCurrentUser, projectsController.create);
   app.put('/api/project/:id', checkToken, isAuth, attachCurrentUser, projectsController.update);
   app.delete('/api/project/:id', checkToken, isAuth, attachCurrentUser, projectsController.remove);
@@ -74,6 +75,6 @@ export = (app) => {
   /**
    * projectCategories request
    */
-  app.get('/api/projectCategories', projectCategoriesController.getFirstLevel);
+  app.get('/api/projectCategories/root', projectCategoriesController.getFirstLevel);
   app.post('/api/projectCategories', projectCategoriesController.create);
 };

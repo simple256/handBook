@@ -6,14 +6,14 @@ const ProjectsSchema = new Schema({
    */
   author: {
     type: Schema.Types.ObjectId,
-    required: true,
+    required: false,
   },
   /**
    * Дата создания проекта
    */
   created_date: {
     type: Schema.Types.Date,
-    required: true,
+    required: false,
   },
   /**
    * Название проекта

@@ -1,10 +1,36 @@
 import { model } from 'mongoose';
 import { Request, Response } from '../interfaces/express';
 
-const Categories = model('ProjectCategory');
+const ProjectCategory = model('ProjectCategory');
 
 function getFirstLevel(request: Request, response: Response) {
-  Categories.find({ parent_id: { $in: [undefined, null, []] } })
+  ProjectCategory.find({ parent_id: { $in: [undefined, null, []] } })
+    .exec()
+    .then(
+      (rez) => {
+        response.json(rez);
+      },
+      (err) => {
+        response.status(500).send(err);
+      },
+    );
+}
+
+function getById(request: Request, response: Response) {
+  ProjectCategory.findById(request.body.id)
+    .exec()
+    .then(
+      (rez) => {
+        response.json(rez);
+      },
+      (err) => {
+        response.status(500).send(err);
+      },
+    );
+}
+
+function getChildrenCategories(request: Request, response: Response) {
+  ProjectCategory.find({ parent_id: request.body.parent_id })
     .exec()
     .then(
       (rez) => {
@@ -17,7 +43,7 @@ function getFirstLevel(request: Request, response: Response) {
 }
 
 function create(request: Request, response: Response) {
-  Categories.create(request.body).then(
+  ProjectCategory.create(request.body).then(
     (rez) => {
       response.json(rez);
     },
@@ -29,5 +55,7 @@ function create(request: Request, response: Response) {
 
 export default {
   getFirstLevel,
+  getChildrenCategories,
+  getById,
   create,
 };
