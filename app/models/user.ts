@@ -23,6 +23,13 @@ const UserSchema = new Schema({
     required: false,
   },
   /**
+   *
+   */
+  foreign_projects_id: {
+    type: [Schema.Types.ObjectId],
+    required: false,
+  },
+  /**
    * Имя пользователя
    */
   name: {

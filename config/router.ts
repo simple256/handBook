@@ -24,6 +24,7 @@ export = (app) => {
    * Actors requests
    */
   app.get('/api/actors', checkToken, isAuth, attachCurrentUser, actorsController.getAll);
+  app.get('/api/actor:id', checkToken, isAuth, attachCurrentUser, actorsController.get);
   app.post('/api/actors', checkToken, isAuth, attachCurrentUser, actorsController.create);
   app.put('/api/actor/:id', checkToken, isAuth, attachCurrentUser, actorsController.update);
   app.delete('/api/actor/:id', checkToken, isAuth, attachCurrentUser, actorsController.remove);
@@ -55,8 +56,10 @@ export = (app) => {
    */
   app.get('/api/projects', checkToken, isAuth, attachCurrentUser, projectsController.getAllUsersProject);
   app.post('/api/projects', checkToken, isAuth, attachCurrentUser, projectsController.create);
+  app.post('/api/projects/saveById', checkToken, isAuth, attachCurrentUser, projectsController.saveProjectToUser);
   app.put('/api/project/:id', checkToken, isAuth, attachCurrentUser, projectsController.update);
   app.delete('/api/project/:id', checkToken, isAuth, attachCurrentUser, projectsController.remove);
+  app.get('/api/projectHistory/:id', checkToken, isAuth, attachCurrentUser, projectsController.getProjectHistory);
 
   /**
    * Stages requests

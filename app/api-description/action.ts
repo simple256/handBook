@@ -41,6 +41,7 @@
  * @apiGroup Actions
  *
  * @apiParam {string} id ID действия
+ * @apiParam {string} [_id] ID действия
  * @apiParam {string} title Название действия
  *
  * @apiSuccessExample Success-Response:
@@ -68,6 +69,21 @@
  * @apiGroup Actions
  *
  * @apiParam {string} id ID действия
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *         "_id": "5e308efacd39ce42b0cc2df0",
+ *         "title": "new action name2"
+ *     }
+ */
+
+/**
+ * @api {post} /actions Создать действие
+ * @apiName PostAction
+ * @apiGroup Actions
+ *
+ * @apiParam {string} title Название действие
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK

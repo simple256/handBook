@@ -30,10 +30,12 @@ function getById(request: Request, response: Response) {
 }
 
 function getChildrenCategories(request: Request, response: Response) {
-  ProjectCategory.find({ parent_id: request.body.parent_id })
+  ProjectCategory.find({ parent_id: request.params.id })
+    .sort({title: 1})
     .exec()
     .then(
       (rez) => {
+        const result =
         response.json(rez);
       },
       (err) => {
@@ -56,6 +58,6 @@ function create(request: Request, response: Response) {
 export default {
   getFirstLevel,
   getChildrenCategories,
-  getById,
   create,
+  // update,
 };

@@ -4,13 +4,6 @@ const StagesSchema = new Schema({
   stages: [
     {
       /**
-       * Идентификатор этапа
-       */
-      _id: {
-        type: Schema.Types.ObjectId,
-        required: false,
-      },
-      /**
        * Название этапа
        */
       title: {
