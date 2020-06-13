@@ -86,6 +86,14 @@ export = (app) => {
     isAdmin,
     projectCategoriesController.create,
   );
+  app.post(
+    '/api/projectCategories/:id',
+    checkToken,
+    isAuth,
+    attachCurrentUser,
+    isAdmin,
+    projectCategoriesController.update,
+  );
   app.get(
     '/api/projectCategories/root',
     checkToken,
