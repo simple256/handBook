@@ -61,6 +61,7 @@ export = (app) => {
   app.put('/api/project/:id', checkToken, isAuth, attachCurrentUser, projectsController.update);
   app.delete('/api/project/:id', checkToken, isAuth, attachCurrentUser, projectsController.remove);
   app.get('/api/projectHistory/:id', checkToken, isAuth, attachCurrentUser, projectsController.getProjectHistory);
+  app.post('/api/project/copy/:id', checkToken, isAuth, attachCurrentUser, projectsController.createCopyOfProject)
 
   /**
    * Stages requests
@@ -76,6 +77,7 @@ export = (app) => {
    */
   app.put('/api/user/:id', checkToken, isAuth, attachCurrentUser, userController.update);
 
+  //#region projectCategories request
   /**
    * projectCategories request
    */
@@ -109,10 +111,8 @@ export = (app) => {
     attachCurrentUser,
     projectCategoriesController.getChildrenCategories,
   );
-
-  /**
-   * objectCategories request
-   */
+  //#endregion projectCategories request
+  //#region objectCategories request
   app.post(
     '/api/objectCategories/create',
     checkToken,
@@ -143,10 +143,8 @@ export = (app) => {
     attachCurrentUser,
     objectCategoriesController.getChildrenCategories,
   );
-
-  /**
-   * actionCategories request
-   */
+  //#endregion objectCategories request
+  //#region actionCategories request
   app.post(
     '/api/actionCategories/create',
     checkToken,
@@ -177,4 +175,5 @@ export = (app) => {
     attachCurrentUser,
     objectCategoriesController.getChildrenCategories,
   );
+  //#endregion AutoComplete JS
 };

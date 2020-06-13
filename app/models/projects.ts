@@ -60,7 +60,13 @@ const ProjectsSchema = new Schema({
     type: Schema.Types.ObjectId,
     required: false,
   },
-
+  /**
+   * Идентификатор исходного проекта
+   */
+  source_project_id: {
+    type: Schema.Types.ObjectId,
+    required: false,
+  }
 });
 
 /**
@@ -81,7 +87,7 @@ const historyOptions = {
   noDiffSave: false,
   noDiffSaveOnMethods: ['delete'],
   noEventSave: true,
-  modelName: 'projects__history',
+  modelName: 'project__history',
   embeddedDocument: false,
   embeddedModelName: '',
   ignorePopulatedFields: false,

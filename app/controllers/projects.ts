@@ -1,8 +1,9 @@
-import { model, Types as MongooseTypes } from 'mongoose';
+import { model } from 'mongoose';
 import { Request, Response } from '../interfaces/express';
 
 const Projects = model('Projects');
 const User = model('User');
+const Stages = model('Stages');
 
 const getAllUsersProject = (req: Request, res: Response) => {
   const userProjects = req.currentUser.get('projects_id');
@@ -24,10 +25,17 @@ const get = (req: Request, res: Response) => {
 };
 
 const create = async (req: Request, res: Response) => {
-  Projects.create(req.body)
-    .then((action: any) => {
-      User.findByIdAndUpdate(req.currentUser.get('_id'), { $push: { projects_id: action.get('_id') } }, (res) =>
-        console.log(`Result of update user: ${res}`),
+  const data = { ...req.body };
+  const userId = req.currentUser.get('_id');
+  data.author_id = userId;
+  data.editor_id = userId;
+  data.creator_id = userId;
+  data.created_date = Date.now();
+  const stages = await Stages.create({});
+  data.stages_id = stages.get('_id');
+  Projects.create(data)
+    .then(async (action: any) => {
+      await User.findByIdAndUpdate(req.currentUser.get('_id'), { $push: { projects_id: action.get('_id') } }
       );
       res.json(action);
     })
@@ -62,10 +70,37 @@ const remove = (req: Request, res: Response) => {
 const createCopyOfProject = (req: Request, res: Response) => {
   Projects.findById(req.body.id)
     .exec()
-    .then((doc) => {
-      doc._id = MongooseTypes.ObjectId();
-      doc.isNew = true;
-      doc.save();
+    .then(async (doc) => {
+      const stages = await Stages.findById(doc.get('_id'));
+      const stageCopy = new Stages({
+        stages: stages.get('stages'),
+      });
+      let stagesId = '';
+      await stageCopy.save((err, item) => {
+        if (err) {
+          res.status(500).json(err);
+        } else {
+          stagesId = item.get('_id');
+        }
+      });
+      const projectCopy = new Projects({
+        is_public: doc.get('is_public'),
+        title: doc.get('title'),
+        editor_id: req.currentUser.get('_id'),
+        creator_id: doc.get('creator_id'),
+        created_date: Date.now(),
+        description: doc.get('description'),
+        category_id: doc.get('category_id'),
+        stages_id: stagesId,
+        source_project_id: doc.get('_id'),
+      });
+      projectCopy.save((err, item) => {
+        if (err) {
+          res.status(500).json(err);
+        } else {
+          res.json(item);
+        }
+      });
     });
 };
 
@@ -76,7 +111,7 @@ const getProjectHistory = (req: Request, response: Response) => {
       select: {},
       sort: '',
       populate: '',
-      limit: 50
+      limit: 50,
     };
     project
       // @ts-ignore
@@ -95,4 +130,5 @@ export default {
   remove,
   saveProjectToUser,
   getProjectHistory,
+  createCopyOfProject,
 };
