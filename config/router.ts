@@ -143,4 +143,38 @@ export = (app) => {
     attachCurrentUser,
     objectCategoriesController.getChildrenCategories,
   );
+
+  /**
+   * actionCategories request
+   */
+  app.post(
+    '/api/actionCategories/create',
+    checkToken,
+    isAuth,
+    attachCurrentUser,
+    isAdmin,
+    objectCategoriesController.create,
+  );
+  app.post(
+    '/api/actionCategories/:id',
+    checkToken,
+    isAuth,
+    attachCurrentUser,
+    isModerator,
+    objectCategoriesController.update,
+  );
+  app.get(
+    '/api/actionCategories/root',
+    checkToken,
+    isAuth,
+    attachCurrentUser,
+    objectCategoriesController.getFirstLevel,
+  );
+  app.get(
+    '/api/actionCategories/:id',
+    checkToken,
+    isAuth,
+    attachCurrentUser,
+    objectCategoriesController.getChildrenCategories,
+  );
 };

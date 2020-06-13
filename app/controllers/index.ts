@@ -1,5 +1,5 @@
 /**
- * Библиотека котроллеров
+ * Библиотека контроллеров
  */
 
 // Инициализация моделей
@@ -11,7 +11,9 @@ require('../models/stages');
 require('../models/user');
 require('../models/projectCategories');
 require('../models/objectCategories');
+require('../models/actionCategories');
 
+import { default as actionCategoriesController } from './actionCategories';
 import { default as actionsController } from './actions';
 import { default as actorsController } from './actors';
 import { default as authController } from './auth';
@@ -32,4 +34,5 @@ export {
   authController,
   userController,
   objectCategoriesController,
+  actionCategoriesController,
 };
