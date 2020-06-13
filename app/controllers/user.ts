@@ -9,15 +9,15 @@ function update(request: Request, response: Response) {
     UserModel.updateOne({ _id: currentUser.get('id') }, request.body)
       .exec()
       .then(
-        () => response.status(200).send('OK'),
+        () => response.status(202).send('Accepted'),
         (err) =>
           response.status(500).json({
             Error: err,
           }),
       );
   } else {
-    response.status(422).json({
-      message: 'Пользователь не найден.',
+    response.status(417).json({
+      message: 'User not found',
     });
   }
 }

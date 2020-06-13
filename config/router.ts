@@ -8,7 +8,7 @@ import {
   stagesController,
   userController,
 } from '../app/controllers';
-import { attachCurrentUser, checkToken, isAuth } from '../app/middleware';
+import { attachCurrentUser, checkToken, isAdmin, isAuth } from '../app/middleware';
 
 export = (app) => {
   /**
@@ -78,6 +78,26 @@ export = (app) => {
   /**
    * projectCategories request
    */
-  app.get('/api/projectCategories/root', projectCategoriesController.getFirstLevel);
-  app.post('/api/projectCategories', projectCategoriesController.create);
+  app.post(
+    '/api/projectCategories/create',
+    checkToken,
+    isAuth,
+    attachCurrentUser,
+    isAdmin,
+    projectCategoriesController.create,
+  );
+  app.get(
+    '/api/projectCategories/root',
+    checkToken,
+    isAuth,
+    attachCurrentUser,
+    projectCategoriesController.getFirstLevel,
+  );
+  app.get(
+    '/api/projectCategories/:id',
+    checkToken,
+    isAuth,
+    attachCurrentUser,
+    projectCategoriesController.getChildrenCategories,
+  );
 };

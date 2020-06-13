@@ -15,6 +15,13 @@ const ProjectCategorySchema = new Schema({
     type: Schema.Types.ObjectId,
     required: false,
   },
+  /**
+   * Есть ли подкатегории
+   */
+  hasChildren: {
+    type: Boolean,
+    required: false
+  }
 });
 
 model('ProjectCategory', ProjectCategorySchema);
