@@ -8,6 +8,14 @@ const ObjectsSchema = new Schema({
     type: String,
     required: true,
   },
+  /**
+   * Категория, к которой относится объект
+   */
+  category_id: {
+    type: Schema.Types.ObjectId,
+    // FIXME: Включить по готовности objectCategories
+    required: false,
+  },
 });
 
 model('Objects', ObjectsSchema);

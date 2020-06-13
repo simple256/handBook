@@ -2,13 +2,14 @@ import {
   actionsController,
   actorsController,
   authController,
+  objectCategoriesController,
   objectsController,
   projectCategoriesController,
   projectsController,
   stagesController,
   userController,
 } from '../app/controllers';
-import { attachCurrentUser, checkToken, isAdmin, isAuth } from '../app/middleware';
+import { attachCurrentUser, checkToken, isAdmin, isAuth, isModerator } from '../app/middleware';
 
 export = (app) => {
   /**
@@ -107,5 +108,39 @@ export = (app) => {
     isAuth,
     attachCurrentUser,
     projectCategoriesController.getChildrenCategories,
+  );
+
+  /**
+   * objectCategories request
+   */
+  app.post(
+    '/api/objectCategories/create',
+    checkToken,
+    isAuth,
+    attachCurrentUser,
+    isAdmin,
+    objectCategoriesController.create,
+  );
+  app.post(
+    '/api/objectCategories/:id',
+    checkToken,
+    isAuth,
+    attachCurrentUser,
+    isModerator,
+    objectCategoriesController.update,
+  );
+  app.get(
+    '/api/objectCategories/root',
+    checkToken,
+    isAuth,
+    attachCurrentUser,
+    objectCategoriesController.getFirstLevel,
+  );
+  app.get(
+    '/api/objectCategories/:id',
+    checkToken,
+    isAuth,
+    attachCurrentUser,
+    objectCategoriesController.getChildrenCategories,
   );
 };

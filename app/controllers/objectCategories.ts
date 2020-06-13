@@ -1,20 +1,20 @@
 import { model } from 'mongoose';
 import { Request, Response } from '../interfaces/express';
 
-const ProjectCategory = model('ProjectCategory');
+const ObjectCategory = model('ObjectCategory');
 
 async function getFirstLevel(request: Request, response: Response) {
-  const rootCategories = await ProjectCategory.find({ parent_id: undefined }).sort({ title: 1 });
+  const rootCategories = await ObjectCategory.find({ parent_id: undefined }).sort({ title: 1 });
   const childrens: boolean[] = new Array(rootCategories.length || 0);
   await Promise.all(
     rootCategories.map(async (item, i) => {
-      await ProjectCategory.findOne({ parent_id: item.get('_id') }, (err, _child) => {
+      await ObjectCategory.findOne({ parent_id: item.get('_id') }, (err, _child) => {
         childrens[i] = Boolean(_child);
       });
     }),
   );
   const modItems = rootCategories.map((elem, i) => {
-    return new ProjectCategory({
+    return new ObjectCategory({
       _id: elem.get('_id'),
       title: elem.get('title'),
       hasChildren: childrens[i],
@@ -24,7 +24,7 @@ async function getFirstLevel(request: Request, response: Response) {
 }
 
 function getById(request: Request, response: Response) {
-  ProjectCategory.findById(request.body.id)
+  ObjectCategory.findById(request.body.id)
     .exec()
     .then(
       (rez) => {
@@ -37,17 +37,17 @@ function getById(request: Request, response: Response) {
 }
 
 async function getChildrenCategories(request: Request, response: Response) {
-  const rootCategories = await ProjectCategory.find({ parent_id: request.params.id });
+  const rootCategories = await ObjectCategory.find({ parent_id: request.params.id });
   const childrens: boolean[] = new Array(rootCategories.length || 0);
   await Promise.all(
     rootCategories.map(async (item, i) => {
-      await ProjectCategory.findOne({ parent_id: item.get('_id') }, (err, _child) => {
+      await ObjectCategory.findOne({ parent_id: item.get('_id') }, (err, _child) => {
         childrens[i] = Boolean(_child);
       });
     }),
   );
   const modItems = rootCategories.map((elem, i) => {
-    return new ProjectCategory({
+    return new ObjectCategory({
       _id: elem.get('_id'),
       title: elem.get('title'),
       hasChildren: childrens[i],
@@ -57,7 +57,7 @@ async function getChildrenCategories(request: Request, response: Response) {
 }
 
 function create(request: Request, response: Response) {
-  ProjectCategory.create(request.body).then(
+  ObjectCategory.create(request.body).then(
     (rez) => {
       response.json(rez);
     },
@@ -68,7 +68,7 @@ function create(request: Request, response: Response) {
 }
 
 function update(request: Request, response: Response) {
-  ProjectCategory.findByIdAndUpdate(request.params.id, request.body)
+  ObjectCategory.findByIdAndUpdate(request.params.id, request.body)
     .exec()
     .then(
       (result) => response.json(result),
