@@ -61,8 +61,15 @@ export = (app) => {
   app.put('/api/project/:id', checkToken, isAuth, attachCurrentUser, projectsController.update);
   app.delete('/api/project/:id', checkToken, isAuth, attachCurrentUser, projectsController.remove);
   app.get('/api/projectHistory/:id', checkToken, isAuth, attachCurrentUser, projectsController.getProjectHistory);
-  app.post('/api/project/copy/:id', checkToken, isAuth, attachCurrentUser, projectsController.createCopyOfProject)
-  app.post('/api/project/comment/:id', checkToken, isAuth, attachCurrentUser, projectsController.addComment)
+  app.post('/api/project/copy/:id', checkToken, isAuth, attachCurrentUser, projectsController.createCopyOfProject);
+  app.post('/api/project/comment/:id', checkToken, isAuth, attachCurrentUser, projectsController.addComment);
+  app.get(
+    '/api/projects/category/:id',
+    checkToken,
+    isAuth,
+    attachCurrentUser,
+    projectsController.getPublicProjectsByCategory,
+  );
 
   /**
    * Stages requests

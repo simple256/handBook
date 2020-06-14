@@ -13,6 +13,16 @@ const getAllUsersProject = (req: Request, res: Response) => {
     .catch((err: Error) => res.status(500).json(err));
 };
 
+const getPublicProjectsByCategory = (req: Request, res: Response) => {
+  Projects.find({
+    category_id: req.params.id,
+    is_public: true,
+  })
+    .exec()
+    .then((actions: any) => res.json(actions))
+    .catch((err: Error) => res.status(500).json(err));
+};
+
 const saveProjectToUser = async (req: Request, res: Response) => {
   const project = await Projects.findById(req.body.id).exec();
 };
@@ -35,8 +45,7 @@ const create = async (req: Request, res: Response) => {
   data.stages_id = stages.get('_id');
   Projects.create(data)
     .then(async (action: any) => {
-      await User.findByIdAndUpdate(req.currentUser.get('_id'), { $push: { projects_id: action.get('_id') } }
-      );
+      await User.findByIdAndUpdate(req.currentUser.get('_id'), { $push: { projects_id: action.get('_id') } });
       res.json(action);
     })
     .catch((err: Error) => res.status(500).json(err));
@@ -61,25 +70,28 @@ const update = (req: Request, res: Response) => {
 };
 
 const addComment = async (req: Request, res: Response) => {
-  Projects.findById(req.params.id).exec()
-    .then(async (project)=> {
-      const comments = project.get('comments') || [];
-      comments.push({
-        author_id: req.currentUser.get('_id'),
-        date: Date.now(),
-        text: req.body.text
-      });
-      project.set('comments', comments);
-      project.save((err, item) => {
-        if (err) {
-          res.status(404).json(err)
-        } else {
-          res.json(item);
-        }
-      })
-    },
-      (err:Error)=> res.status(404).json(err))
-}
+  Projects.findById(req.params.id)
+    .exec()
+    .then(
+      async (project) => {
+        const comments = project.get('comments') || [];
+        comments.push({
+          author_id: req.currentUser.get('_id'),
+          date: Date.now(),
+          text: req.body.text,
+        });
+        project.set('comments', comments);
+        project.save((err, item) => {
+          if (err) {
+            res.status(404).json(err);
+          } else {
+            res.json(item);
+          }
+        });
+      },
+      (err: Error) => res.status(404).json(err),
+    );
+};
 
 const remove = (req: Request, res: Response) => {
   Projects.deleteOne({ id: req.params.id })
@@ -153,4 +165,5 @@ export default {
   getProjectHistory,
   createCopyOfProject,
   addComment,
+  getPublicProjectsByCategory,
 };
