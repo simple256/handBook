@@ -60,6 +60,27 @@ const update = (req: Request, res: Response) => {
     .catch((err: Error) => res.status(500).json(err));
 };
 
+const addComment = async (req: Request, res: Response) => {
+  Projects.findById(req.params.id).exec()
+    .then(async (project)=> {
+      const comments = project.get('comments') || [];
+      comments.push({
+        author_id: req.currentUser.get('_id'),
+        date: Date.now(),
+        text: req.body.text
+      });
+      project.set('comments', comments);
+      project.save((err, item) => {
+        if (err) {
+          res.status(404).json(err)
+        } else {
+          res.json(item);
+        }
+      })
+    },
+      (err:Error)=> res.status(404).json(err))
+}
+
 const remove = (req: Request, res: Response) => {
   Projects.deleteOne({ id: req.params.id })
     .exec()
@@ -131,4 +152,5 @@ export default {
   saveProjectToUser,
   getProjectHistory,
   createCopyOfProject,
+  addComment,
 };

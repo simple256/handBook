@@ -66,6 +66,19 @@ const ProjectsSchema = new Schema({
   source_project_id: {
     type: Schema.Types.ObjectId,
     required: false,
+  },
+  /**
+   * Комментарии к проекту
+   */
+  comments: {
+    type: [{
+      author_id: Schema.Types.ObjectId,
+      date: Schema.Types.Date,
+      text: String,
+    }
+    ],
+    required: false,
+    default: []
   }
 });
 
@@ -96,8 +109,6 @@ const historyOptions = {
 /**
  * Подключение плагина истории
  */
-ProjectsSchema.plugin(
-  history(historyOptions),
-);
+ProjectsSchema.plugin(history(historyOptions));
 
 model('Projects', ProjectsSchema);
