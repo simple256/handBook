@@ -96,7 +96,7 @@ const historyOptions = {
   timestampFieldName: 'timestamp',
   methodFieldName: 'method',
   collectionIdType: false,
-  ignore: [],
+  ignore: ['comments'],
   noDiffSave: false,
   noDiffSaveOnMethods: ['delete'],
   noEventSave: true,
