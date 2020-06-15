@@ -57,8 +57,9 @@ const ProjectsSchema = new Schema({
    * Массив идентификаторов этапов проекта
    */
   stages_id: {
-    type: Schema.Types.ObjectId,
+    type: [Schema.Types.ObjectId],
     required: false,
+    default: [],
   },
   /**
    * Идентификатор исходного проекта

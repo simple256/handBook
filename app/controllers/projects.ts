@@ -41,8 +41,6 @@ const create = async (req: Request, res: Response) => {
   data.editor_id = userId;
   data.creator_id = userId;
   data.created_date = Date.now();
-  const stages = await Stages.create({});
-  data.stages_id = stages.get('_id');
   Projects.create(data)
     .then(async (action: any) => {
       await User.findByIdAndUpdate(req.currentUser.get('_id'), { $push: { projects_id: action.get('_id') } });
