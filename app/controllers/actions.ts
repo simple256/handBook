@@ -5,6 +5,7 @@ const Actions = model('Actions');
 
 function getAll(request: Request, response: Response): void {
   Actions.find()
+    .sort({ title: 1 })
     .exec()
     .then((actions: any) => response.json(actions))
     .catch((err: any) => response.status(500).json(err));

@@ -8,6 +8,7 @@ const Stages = model('Stages');
 const getAllUsersProject = (req: Request, res: Response) => {
   const userProjects = req.currentUser.get('projects_id');
   Projects.find({ _id: { $in: userProjects } })
+    .sort({ title: 1 })
     .exec()
     .then((actions: any) => res.json(actions))
     .catch((err: Error) => res.status(500).json(err));
@@ -18,6 +19,7 @@ const getPublicProjectsByCategory = (req: Request, res: Response) => {
     category_id: req.params.id,
     is_public: true,
   })
+    .sort({ title: 1 })
     .exec()
     .then((actions: any) => res.json(actions))
     .catch((err: Error) => res.status(500).json(err));

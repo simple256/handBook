@@ -5,11 +5,11 @@ const ObjectCategory = model('ObjectCategory');
 
 async function getFirstLevel(request: Request, response: Response) {
   const rootCategories = await ObjectCategory.find({ parent_id: undefined }).sort({ title: 1 });
-  const childrens: boolean[] = new Array(rootCategories.length || 0);
+  const children: boolean[] = new Array(rootCategories.length || 0);
   await Promise.all(
     rootCategories.map(async (item, i) => {
       await ObjectCategory.findOne({ parent_id: item.get('_id') }, (err, _child) => {
-        childrens[i] = Boolean(_child);
+        children[i] = Boolean(_child);
       });
     }),
   );
@@ -17,7 +17,7 @@ async function getFirstLevel(request: Request, response: Response) {
     return new ObjectCategory({
       _id: elem.get('_id'),
       title: elem.get('title'),
-      hasChildren: childrens[i],
+      hasChildren: children[i],
     });
   });
   response.json(modItems);
@@ -38,11 +38,11 @@ function getById(request: Request, response: Response) {
 
 async function getChildrenCategories(request: Request, response: Response) {
   const rootCategories = await ObjectCategory.find({ parent_id: request.params.id });
-  const childrens: boolean[] = new Array(rootCategories.length || 0);
+  const children: boolean[] = new Array(rootCategories.length || 0);
   await Promise.all(
     rootCategories.map(async (item, i) => {
       await ObjectCategory.findOne({ parent_id: item.get('_id') }, (err, _child) => {
-        childrens[i] = Boolean(_child);
+        children[i] = Boolean(_child);
       });
     }),
   );
@@ -50,7 +50,7 @@ async function getChildrenCategories(request: Request, response: Response) {
     return new ObjectCategory({
       _id: elem.get('_id'),
       title: elem.get('title'),
-      hasChildren: childrens[i],
+      hasChildren: children[i],
     });
   });
   response.json(modItems);

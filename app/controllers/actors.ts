@@ -5,6 +5,7 @@ const Actors = model('Actors');
 
 const getAll = (req: Request, res: Response) => {
   Actors.find()
+    .sort({ title: 1 })
     .exec()
     .then((actions: any) => res.json(actions))
     .catch((err: Error) => res.status(500).json(err));
