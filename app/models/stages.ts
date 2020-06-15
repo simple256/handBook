@@ -20,25 +20,28 @@ const StagesSchema = new Schema({
         required: false,
       },
       /**
-       * Идентификатор участника этапа
+       * Идентификаторы участников этапа
        */
-      actor_id: {
-        type: Schema.Types.ObjectId,
+      actors_id: {
+        type: [Schema.Types.ObjectId],
         required: false,
+        default: [],
       },
       /**
-       * Идентификатор объекта
+       * Идентификаторы объектов
        */
-      object_id: {
-        type: Schema.Types.ObjectId,
+      objects_id: {
+        type: [Schema.Types.ObjectId],
         required: false,
+        default: [],
       },
       /**
-       * Идентификатор предмета
+       * Идентификаторы действий
        */
-      action_id: {
-        type: Schema.Types.ObjectId,
+      actions_id: {
+        type: [Schema.Types.ObjectId],
         required: false,
+        default: [],
       },
     },
   ],
@@ -71,8 +74,6 @@ const historyOptions = {
 /**
  * Подключение плагина истории
  */
-StagesSchema.plugin(
-  history(historyOptions),
-);
+StagesSchema.plugin(history(historyOptions));
 
 model('Stages', StagesSchema);
