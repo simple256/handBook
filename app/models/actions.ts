@@ -8,6 +8,13 @@ const ActionsSchema = new Schema({
     type: String,
     required: true,
   },
+  /**
+   * Категория, к которой относится объект
+   */
+  category_id: {
+    type: Schema.Types.ObjectId,
+    required: true,
+  },
 });
 
 model('Actions', ActionsSchema);

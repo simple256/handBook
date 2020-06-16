@@ -3,22 +3,22 @@ import { model, Schema } from 'mongoose';
 import * as history from 'mongoose-history-plugin';
 
 const StagesSchema = new Schema({
+  /**
+   * Название этапа
+   */
+  title: {
+    type: String,
+    required: true,
+  },
+  /**
+   * Описание этапа
+   */
+  description: {
+    type: String,
+    required: false,
+  },
   stages: [
     {
-      /**
-       * Название этапа
-       */
-      title: {
-        type: String,
-        required: true,
-      },
-      /**
-       * Описание этапа
-       */
-      description: {
-        type: String,
-        required: false,
-      },
       /**
        * Идентификаторы участников этапа
        */
