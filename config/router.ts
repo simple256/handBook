@@ -1,4 +1,5 @@
 import {
+  actionCategoriesController,
   actionsController,
   actorsController,
   authController,
@@ -7,8 +8,8 @@ import {
   projectCategoriesController,
   projectsController,
   stagesController,
-  userController,
-} from '../app/controllers';
+  userController
+} from "../app/controllers";
 import { attachCurrentUser, checkToken, isAdmin, isAuth, isModerator } from '../app/middleware';
 
 export = (app) => {
@@ -159,7 +160,7 @@ export = (app) => {
     isAuth,
     attachCurrentUser,
     isAdmin,
-    objectCategoriesController.create,
+    actionCategoriesController.create,
   );
   app.post(
     '/api/actionCategories/:id',
@@ -167,21 +168,21 @@ export = (app) => {
     isAuth,
     attachCurrentUser,
     isModerator,
-    objectCategoriesController.update,
+    actionCategoriesController.update,
   );
   app.get(
     '/api/actionCategories/root',
     checkToken,
     isAuth,
     attachCurrentUser,
-    objectCategoriesController.getFirstLevel,
+    actionCategoriesController.getFirstLevel,
   );
   app.get(
     '/api/actionCategories/:id',
     checkToken,
     isAuth,
     attachCurrentUser,
-    objectCategoriesController.getChildrenCategories,
+    actionCategoriesController.getChildrenCategories,
   );
   //#endregion AutoComplete JS
 };
